@@ -28,12 +28,17 @@ else()
    message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
 endif()
 
+# Default to C++11
+# if(NOT CMAKE_CXX_STANDARD)
+#   set(CMAKE_CXX_STANDARD 11)
+# endif()
+
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
-find_package(OpenCV 4.4)
-   if(NOT OpenCV_FOUND)
-      message(FATAL_ERROR "OpenCV > 4.4 not found.")
-   endif()
+find_package(OpenCV 4.6 EXACT REQUIRED)
+if(NOT OpenCV_FOUND)
+message(FATAL_ERROR "OpenCV 4.6 not found.")
+endif()
 
 MESSAGE("OPENCV VERSION:")
 MESSAGE(${OpenCV_VERSION})
