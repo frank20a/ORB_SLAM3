@@ -7,8 +7,8 @@ ENDIF()
 
 MESSAGE("Build type: " ${CMAKE_BUILD_TYPE})
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall   -O3")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall   -O3")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wno-all   -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-all  -Wno-deprecated-declarations -Wno-deprecated -Wno-conversion-null -O3")
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native")
 
@@ -37,7 +37,7 @@ LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
 find_package(OpenCV 4.6 EXACT REQUIRED)
 if(NOT OpenCV_FOUND)
-message(FATAL_ERROR "OpenCV 4.6 not found.")
+        message(FATAL_ERROR "OpenCV 4.6 not found.")
 endif()
 
 MESSAGE("OPENCV VERSION:")
@@ -130,6 +130,8 @@ ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
 -lcrypto
 )
 
+
+# set(realsense2_FOUND 0)
 # If RealSense SDK is found the library is added and its examples compiled
 if(realsense2_FOUND)
     include_directories(${PROJECT_NAME}
@@ -313,15 +315,15 @@ add_executable(stereo_tum_vi_old
         Examples_old/Stereo/stereo_tum_vi.cc)
 target_link_libraries(stereo_tum_vi_old ${PROJECT_NAME})
 
-if(realsense2_FOUND)
-    add_executable(stereo_realsense_t265_old
-            Examples_old/Stereo/stereo_realsense_t265.cc)
-    target_link_libraries(stereo_realsense_t265_old ${PROJECT_NAME})
+# if(realsense2_FOUND)
+#     add_executable(stereo_realsense_t265_old
+#             Examples_old/Stereo/stereo_realsense_t265.cc)
+#     target_link_libraries(stereo_realsense_t265_old ${PROJECT_NAME})
 
-    add_executable(stereo_realsense_D435i_old
-            Examples_old/Stereo/stereo_realsense_D435i.cc)
-    target_link_libraries(stereo_realsense_D435i_old ${PROJECT_NAME})
-endif()
+#     add_executable(stereo_realsense_D435i_old
+#             Examples_old/Stereo/stereo_realsense_D435i.cc)
+#     target_link_libraries(stereo_realsense_D435i_old ${PROJECT_NAME})
+# endif()
 
 #Monocular examples
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples_old/Monocular)
